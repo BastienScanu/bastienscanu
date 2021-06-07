@@ -63,6 +63,8 @@ class Home extends Component {
 
         largeHeader = document.getElementById('particles');
         largeHeader.style.height = `${height}px`;
+        // Make sure not to widen the body because of the header.
+        largeHeader.style.overflow = 'hidden';
 
         canvas = document.getElementById('demo-canvas');
         canvas.width = width;
