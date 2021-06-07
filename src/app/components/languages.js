@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {translate} from 'react-i18next';
+import {withTranslation} from 'react-i18next';
 import CircularProgressBar from './charts/circularProgressBar';
 
 class Languages extends Component {
@@ -29,8 +29,12 @@ class Languages extends Component {
   }
 }
 
+Languages.defaultProps = {
+  t: PropTypes.func
+};
+
 Languages.propTypes = {
   t: PropTypes.func
 };
 
-export default translate(["common", "skills"], {wait: true})(Languages);
+export default withTranslation(['common', 'skills'])(Languages);

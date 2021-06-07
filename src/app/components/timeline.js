@@ -17,11 +17,12 @@ class Timeline extends Component {
     this.handleGoToCard = this.handleGoToCard.bind(this);
 
     let slidesToShow = 1;
-    if (window.matchMedia("(min-width: 62em)").matches) {
+    if (window.matchMedia('(min-width: 62em)').matches) {
       slidesToShow = 3;
-    } else if (window.matchMedia("(min-width: 48em)").matches && window.matchMedia("(max-width: 62em)").matches) {
+    } else if (window.matchMedia('(min-width: 48em)').matches && window.matchMedia('(max-width: 62em)').matches) {
       slidesToShow = 2;
     }
+
     this.state = {
       currentSlide: 0,
       slidesToShow,
@@ -31,11 +32,11 @@ class Timeline extends Component {
   }
 
   handleClickLeft() {
-    this.setState({currentSlide: (this.state.currentSlide - 1)});
+    this.setState(prevState => ({currentSlide: (prevState.state.currentSlide - 1)}));
   }
 
   handleClickRight() {
-    this.setState({currentSlide: (this.state.currentSlide + 1)});
+    this.setState(prevState => ({currentSlide: (prevState.state.currentSlide + 1)}));
   }
 
   disableClickLeft(cards) {
@@ -56,12 +57,12 @@ class Timeline extends Component {
 
   handleChangeSchool() {
     this.setState({currentSlide: 0});
-    this.setState({school: !this.state.school});
+    this.setState(prevState => ({school: !prevState.state.school}));
   }
 
   handleChangeJob() {
     this.setState({currentSlide: 0});
-    this.setState({job: !this.state.job});
+    this.setState(prevState => ({job: !prevState.state.job}));
   }
 
   handleGoToCard(event) {
@@ -87,6 +88,7 @@ class Timeline extends Component {
                 </div>
               );
             }
+
             return null;
           })
           }
@@ -96,14 +98,16 @@ class Timeline extends Component {
             {cards.map((card, index) => {
               if (index === self.state.currentSlide) {
                 return (
-                  <li key={index} className="selectedDot" onClick={this.handleGoToCard}><span>{index}</span></li>
+                  <li key={card.name} className="selectedDot" onClick={this.handleGoToCard}><span>{index}</span></li>
                 );
               }
+
               if (index < cards.length - this.state.slidesToShow + 1) {
                 return (
-                  <li key={index} onClick={this.handleGoToCard}><span>{index}</span></li>
+                  <li key={card.name} onClick={this.handleGoToCard}><span>{index}</span></li>
                 );
               }
+
               return ('');
             })
             }
@@ -111,7 +115,7 @@ class Timeline extends Component {
         </div>
         <div className="row timelineSettings">
           <div className="timelineSettingsPanel">
-            <button className={this.classLeft(cards)} onClick={this.handleClickLeft} disabled={this.disableClickLeft(cards)}>
+            <button type="button" className={this.classLeft(cards)} disabled={this.disableClickLeft(cards)} onClick={this.handleClickLeft}>
               <i className="material-icons">keyboard_arrow_left</i>
             </button>
             <div className="toggles">
@@ -122,7 +126,7 @@ class Timeline extends Component {
                   unchecked: <i className="material-icons">school</i>
                 }}
                 onChange={this.handleChangeSchool}
-                />
+              />
               <Toggle
                 defaultChecked={this.state.job}
                 icons={{
@@ -130,9 +134,9 @@ class Timeline extends Component {
                   unchecked: <i className="material-icons">work</i>
                 }}
                 onChange={this.handleChangeJob}
-                />
+              />
             </div>
-            <button className={this.classRight(cards)} onClick={this.handleClickRight} disabled={this.disableClickRight(cards)}>
+            <button type="button" className={this.classRight(cards)} disabled={this.disableClickRight(cards)} onClick={this.handleClickRight}>
               <i className="material-icons">keyboard_arrow_right</i>
             </button>
           </div>
@@ -142,8 +146,11 @@ class Timeline extends Component {
   }
 }
 
+Timeline.defaultProps = {
+  cards: PropTypes.arrayOf(PropTypes.object)
+};
+
 Timeline.propTypes = {
-  t: PropTypes.func,
   cards: PropTypes.arrayOf(PropTypes.object)
 };
 

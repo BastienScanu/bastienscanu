@@ -3,20 +3,24 @@ const conf = require('./gulp.conf');
 const path = require('path');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ESLintPlugin = require('eslint-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 
 module.exports = {
+  mode: 'development',
   module: {
     rules: [
       {
         test: /\.js$/,
         enforce: 'pre',
         exclude: /node_modules/,
-        loader: 'babel-loader'
+        use: [{
+          loader: 'babel-loader'
+        }]
       },
       {
         test: /\.(css|scss)$/,
-        loaders: [
+        use: [
           'style-loader',
           'css-loader',
           'sass-loader'
@@ -29,11 +33,10 @@ module.exports = {
     ]
   },
   plugins: [
-    new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
     new HtmlWebpackPlugin({
       template: conf.path.src('index.html')
     }),
+    new ESLintPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.LoaderOptionsPlugin({options: {postcss: [autoprefixer]}})
   ],

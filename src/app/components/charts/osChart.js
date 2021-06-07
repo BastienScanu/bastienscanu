@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import {translate} from 'react-i18next';
+import {withTranslation} from 'react-i18next';
 import Terminal from '../elements/terminal';
 
 class OsChart extends Component {
@@ -15,8 +14,4 @@ class OsChart extends Component {
   }
 }
 
-OsChart.propTypes = {
-  t: PropTypes.func
-};
-
-export default translate(["common", "skills"], {wait: true})(OsChart);
+export default withTranslation(['common', 'skills'])(OsChart);

@@ -1,3 +1,5 @@
+@use 'sass:math';
+
 #skills {
   display: flex;
   flex-direction: column;
@@ -84,14 +86,14 @@
 
     @for $i from 1 through $stepnum {
 
-      $weight: ( ( $i - 1 ) / $stepnum ) * 100;
+      $weight: ( math.div($i - 1, $stepnum) ) * 100;
 
       $colour_mix: mix($color_b, rgba($color_a, $opacity), $weight);
 
       $seperator: null;
 
-      @if($i != $stepnum){ 
-        $seperator: #{','}; 
+      @if($i != $stepnum){
+        $seperator: #{','};
       }
 
       $gradient_steps: append( #{$gradient_steps}, #{$i}px #{$i}px $colour_mix $seperator );
@@ -136,7 +138,7 @@
 
   .frontEnd5 {
     @extend .frontEnd4;
-    text-shadow: 
+    text-shadow:
       0 1px 0 rgb(255, 192, 40);
   }
 
@@ -166,7 +168,7 @@
 
   .frontEnd9 {
     @extend .frontEnd4;
-    text-shadow: 
+    text-shadow:
       0 1px 0 rgb(255, 192, 40),
       0 2px 0 rgb(255, 162, 10),
       0 3px 0 rgb(245, 152, 0),
@@ -181,7 +183,7 @@
 
   .frontEnd11 {
     @extend .frontEnd4;
-    text-shadow: 
+    text-shadow:
       0 1px 0 rgb(255, 192, 40),
       0 2px 0 rgb(255, 162, 10),
       0 3px 0 rgb(245, 152, 0),
@@ -397,7 +399,7 @@
       font-size: 1rem;
       text-align: center;
       font-weight: 400;
-      color: rgba(0, 0, 0, 0.54);    
+      color: rgba(0, 0, 0, 0.54);
     }
   }
 }

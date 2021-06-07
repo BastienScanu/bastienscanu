@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {translate} from 'react-i18next';
+import {withTranslation} from 'react-i18next';
 import {Bar} from 'react-chartjs-2';
 
 class BackChart extends Component {
@@ -15,17 +15,15 @@ class BackChart extends Component {
   componentDidMount() {
     setInterval(() => {
       if (this.state.play && this.state.item < this.props.data.length) {
-        this.setState({
-          item: this.state.item + 1
-        });
+        this.setState(prevState => ({item: prevState.item + 1}));
       }
     }, 200);
   }
 
   componentWillUnmount() {
-    this.state = {
+    this.setState({
       play: false
-    };
+    });
   }
 
   render() {
@@ -35,13 +33,14 @@ class BackChart extends Component {
       labels: backEndData.map(item => t(`skills:back.technos.${item.name}`)),
       datasets: [
         {
-          label: t(`skills:title`),
-          backgroundColor: "rgba(43, 175, 43, 0.7)",
-          borderColor: "rgb(43, 175, 43)",
+          label: t('skills:title'),
+          backgroundColor: 'rgba(43, 175, 43, 0.7)',
+          borderColor: 'rgb(43, 175, 43)',
           data: backEndData.map((item, index) => {
             if (index > this.state.item) {
               return 0;
             }
+
             return item.value;
           })
         }
@@ -64,15 +63,18 @@ class BackChart extends Component {
         callbacks: {
           label: tooltipItem => {
             if (tooltipItem.yLabel > 70) {
-              return t(`skills:expert`);
+              return t('skills:expert');
             }
+
             if (tooltipItem.yLabel > 50) {
-              return t(`skills:confirmed`);
+              return t('skills:confirmed');
             }
+
             if (tooltipItem.yLabel > 30) {
-              return t(`skills:intermediate`);
+              return t('skills:intermediate');
             }
-            return t(`skills:learning`);
+
+            return t('skills:learning');
           }
         }
       }
@@ -86,9 +88,14 @@ class BackChart extends Component {
   }
 }
 
+BackChart.defaultProps = {
+  t: PropTypes.func,
+  data: PropTypes.object
+};
+
 BackChart.propTypes = {
   t: PropTypes.func,
   data: PropTypes.object
 };
 
-export default translate(["common", "skills"], {wait: true})(BackChart);
+export default withTranslation(['common', 'skills'])(BackChart);

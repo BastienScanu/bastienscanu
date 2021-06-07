@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {translate} from 'react-i18next';
-import {TweenLite} from "gsap";
+import {withTranslation} from 'react-i18next';
+import {TweenLite} from 'gsap';
 
 class Home extends Component {
   componentDidMount() {
-    if (window.matchMedia("(min-width: 48em)").matches) {
+    if (window.matchMedia('(min-width: 48em)').matches) {
       let width;
       let height;
       let largeHeader;
@@ -15,16 +15,17 @@ class Home extends Component {
       let animateHeader = true;
       let target;
 
-    // Util
+      // Util
       const getDistance = (p1, p2) => {
         return Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2);
       };
 
-    // Canvas manipulation
+      // Canvas manipulation
       const drawLines = p => {
         if (!p.active) {
           return;
         }
+
         for (let i = 0; i < p.closest.length; i++) {
           ctx.beginPath();
           ctx.moveTo(p.x, p.y);
@@ -48,6 +49,7 @@ class Home extends Component {
         if (!point.active) {
           return;
         }
+
         ctx.beginPath();
         ctx.arc(point.pos.x, point.pos.y, point.radius, 0, 2 * Math.PI, false);
         ctx.fillStyle = `rgba(316, 255, 205, ${point.active})`;
@@ -67,18 +69,18 @@ class Home extends Component {
         canvas.height = height;
         ctx = canvas.getContext('2d');
 
-        // create points
+        // Create points
         points = [];
         for (let x = 0; x < width; x += width / 20) {
           for (let y = 0; y < height; y += height / 20) {
-            const px = x + Math.random() * width / 20;
-            const py = y + Math.random() * height / 20;
+            const px = x + (Math.random() * width / 20);
+            const py = y + (Math.random() * height / 20);
             const p = {x: px, originX: px, y: py, originY: py};
             points.push(p);
           }
         }
 
-        // for each point find the 5 closest points
+        // For each point find the 5 closest points
         for (let i = 0; i < points.length; i++) {
           const closest = [];
           const p1 = points[i];
@@ -105,18 +107,19 @@ class Home extends Component {
               }
             }
           }
+
           p1.closest = closest;
         }
 
         for (let i = 0; i < points.length; i++) {
-          const c = circle(points[i], 2 + Math.random() * 2, 'rgba(255,255,255,0.3)');
+          const c = circle(points[i], 2 + (Math.random() * 2), 'rgba(255,255,255,0.3)');
           points[i].circle = c;
         }
       };
 
       const shiftPoint = p => {
-        TweenLite.to(p, 1 + Number(Math.random()), {x: p.originX - 50 + Math.random() * 100,
-          y: p.originY - 50 + Math.random() * 100,
+        TweenLite.to(p, 1 + Number(Math.random()), {x: p.originX - 50 + (Math.random() * 100),
+          y: p.originY - 50 + (Math.random() * 100),
           onComplete: () => {
             shiftPoint(p);
           }});
@@ -132,6 +135,7 @@ class Home extends Component {
           posx = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
           posy = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
         }
+
         target.x = posx;
         target.y = posy;
       };
@@ -152,7 +156,7 @@ class Home extends Component {
         if (animateHeader) {
           ctx.clearRect(0, 0, width, height);
           for (let i = 0; i < points.length; i++) {
-                // detect points in range
+            // Detect points in range
             if (Math.abs(getDistance(target, points[i])) < 4000) {
               points[i].active = 0.3;
               points[i].circle.active = 0.6;
@@ -171,6 +175,7 @@ class Home extends Component {
             drawCircle(points[i].circle);
           }
         }
+
         requestAnimationFrame(animate);
       };
 
@@ -185,6 +190,7 @@ class Home extends Component {
         if (!('ontouchstart' in window)) {
           window.addEventListener('mousemove', mouseMove);
         }
+
         window.addEventListener('scroll', scrollCheck);
         window.addEventListener('resize', resize);
       };
@@ -194,12 +200,13 @@ class Home extends Component {
       addListeners();
     }
   }
+
   render() {
     const {t} = this.props;
     return (
       <section id="home">
         <div id="particles" className="particles">
-          <canvas id="demo-canvas"></canvas>
+          <canvas id="demo-canvas"/>
           <div className="container" id="hey">
             <h1>Bastien Scanu</h1>
             <h2>{t('home:job')}</h2>
@@ -210,8 +217,12 @@ class Home extends Component {
   }
 }
 
+Home.defaultProps = {
+  t: PropTypes.func
+};
+
 Home.propTypes = {
   t: PropTypes.func
 };
 
-export default translate(["common", "home"], {wait: true})(Home);
+export default withTranslation(['common', 'home'])(Home);

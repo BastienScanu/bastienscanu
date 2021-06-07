@@ -1,4 +1,5 @@
-import React, {Component} from 'react';
+import React, {Component, Suspense} from 'react';
+
 import Header from './components/header';
 import Home from './components/home';
 import MyFooter from './components/footer';
@@ -14,18 +15,20 @@ export class Main extends Component {
   render() {
     return (
       <div>
-        <Header/>
-        <Home/>
-        <div id="about">
-          <About/>
-          <Qualities/>
-        </div>
-        <Skills/>
-        <Experience/>
-        <BuiltWith/>
-        <Contact/>
-        <ActionButton/>
-        <MyFooter/>
+        <Suspense fallback="loading">
+          <Header/>
+          <Home/>
+          <div id="about">
+            <About/>
+            <Qualities/>
+          </div>
+          <Skills/>
+          <Experience/>
+          <BuiltWith/>
+          <Contact/>
+          <ActionButton/>
+          <MyFooter/>
+        </Suspense>
       </div>
     );
   }

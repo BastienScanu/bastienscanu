@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {translate} from 'react-i18next';
+import {withTranslation} from 'react-i18next';
 import {Doughnut} from 'react-chartjs-2';
 
 class DatabaseChart extends Component {
@@ -14,9 +14,7 @@ class DatabaseChart extends Component {
   componentDidMount() {
     setInterval(() => {
       if (this.state.item < this.props.data.length) {
-        this.setState({
-          item: this.state.item + 1
-        });
+        this.setState(prevState => ({item: prevState.item + 1}));
       }
     }, 20);
   }
@@ -29,14 +27,15 @@ class DatabaseChart extends Component {
       datasets: [
         {
           backgroundColor: [
-            "rgb(43, 175, 43)",
-            "rgb(2, 119, 189)",
-            "rgb(230, 42, 16)"
+            'rgb(43, 175, 43)',
+            'rgb(2, 119, 189)',
+            'rgb(230, 42, 16)'
           ],
           data: databaseData.map((item, index) => {
             if (index > this.state.item) {
               return 0;
             }
+
             return item.value;
           })
         }
@@ -60,9 +59,14 @@ class DatabaseChart extends Component {
   }
 }
 
+DatabaseChart.defaultProps = {
+  t: PropTypes.func,
+  data: PropTypes.object
+};
+
 DatabaseChart.propTypes = {
   t: PropTypes.func,
   data: PropTypes.object
 };
 
-export default translate(["common", "skills"], {wait: true})(DatabaseChart);
+export default withTranslation(['common', 'skills'])(DatabaseChart);

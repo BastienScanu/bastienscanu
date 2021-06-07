@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import {Logo} from './logo';
 import i18n from 'i18next';
 import Scroll from 'react-scroll';
-const Link = Scroll.Link;
-import {translate} from 'react-i18next';
+const {Link} = Scroll;
+import {withTranslation} from 'react-i18next';
 
 class Header extends Component {
   constructor() {
@@ -26,19 +26,19 @@ class Header extends Component {
   }
 
   handleScroll() {
-    if (document.body.scrollTop > window.innerHeight / 2 - 50 || document.documentElement.scrollTop > window.innerHeight / 2 - 50) {
-      document.getElementById("header").className = `${this.dynamicClass()} greenHeader`;
+    if (document.body.scrollTop > (window.innerHeight / 2) - 50 || document.documentElement.scrollTop > (window.innerHeight / 2) - 50) {
+      document.getElementById('header').className = `${this.dynamicClass()} greenHeader`;
     } else {
-      document.getElementById("header").className = this.dynamicClass();
+      document.getElementById('header').className = this.dynamicClass();
     }
   }
 
   handleClickEn() {
-    i18n.changeLanguage("en");
+    i18n.changeLanguage('en');
   }
 
   handleClickFr() {
-    i18n.changeLanguage("fr");
+    i18n.changeLanguage('fr');
   }
 
   handleClickMenu() {
@@ -48,7 +48,7 @@ class Header extends Component {
   }
 
   dynamicClass() {
-    return `header${this.state.openedMenu ? "Mobile" : ""}`;
+    return `header${this.state.openedMenu ? 'Mobile' : ''}`;
   }
 
   render() {
@@ -57,29 +57,29 @@ class Header extends Component {
       <header id="header" className={this.dynamicClass()}>
         <div className="container">
           <div className="showMenu">
-            <i onClick={this.handleClickMenu} className="material-icons">menu</i>
+            <i className="material-icons" onClick={this.handleClickMenu}>menu</i>
           </div>
-          <Logo size={32} big white/>
+          <Logo big white size={32}/>
           <ul className="navBar">
             <li>
-              <Link activeClass="current-menu" to="home" spy smooth duration={500}>{t('header:home')}</Link>
+              <Link spy smooth activeClass="current-menu" to="home" duration={500}>{t('header:home')}</Link>
             </li>
             <li>
-              <Link activeClass="current-menu" to="about" spy smooth duration={500} offset={-110}>{t('header:about')}</Link>
+              <Link spy smooth activeClass="current-menu" to="about" duration={500} offset={-110}>{t('header:about')}</Link>
             </li>
             <li>
-              <Link activeClass="current-menu" to="skills" spy smooth duration={500} offset={-90}>{t('header:skills')}</Link>
+              <Link spy smooth activeClass="current-menu" to="skills" duration={500} offset={-90}>{t('header:skills')}</Link>
             </li>
             <li>
-              <Link activeClass="current-menu" to="experience" spy smooth duration={500} offset={-90}>{t('header:experience')}</Link>
+              <Link spy smooth activeClass="current-menu" to="experience" duration={500} offset={-90}>{t('header:experience')}</Link>
             </li>
             <li>
-              <Link activeClass="current-menu" to="contact" spy smooth duration={500}>{t('header:contact')}</Link>
+              <Link spy smooth activeClass="current-menu" to="contact" duration={500}>{t('header:contact')}</Link>
             </li>
           </ul>
           <ul className="langs">
-            <li onClick={this.handleClickEn} className={i18n.language === "en" ? 'active' : ''}>EN</li>
-            <li onClick={this.handleClickFr} className={i18n.language === "fr" ? 'active' : ''}>FR</li>
+            <li className={i18n.language === 'en' ? 'active' : ''} onClick={this.handleClickEn}>EN</li>
+            <li className={i18n.language === 'fr' ? 'active' : ''} onClick={this.handleClickFr}>FR</li>
           </ul>
         </div>
       </header>
@@ -88,8 +88,12 @@ class Header extends Component {
   }
 }
 
+Header.defaultProps = {
+  t: PropTypes.func
+};
+
 Header.propTypes = {
   t: PropTypes.func
 };
 
-export default translate(["common", "header"], {wait: true})(Header);
+export default withTranslation(['common', 'header'])(Header);

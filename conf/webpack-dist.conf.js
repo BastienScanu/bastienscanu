@@ -3,8 +3,8 @@ const conf = require('./gulp.conf');
 const path = require('path');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const UglifyESPlugin = require('uglifyes-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const ESLintPlugin = require('eslint-webpack-plugin');
 const pkg = require('../package.json');
 const autoprefixer = require('autoprefixer');
 
@@ -12,17 +12,23 @@ module.exports = {
   node: {
     fs: 'empty'
   },
+  mode: 'production',
+  optimization: {
+    minimizer: [new UglifyJsPlugin()]
+  },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
         enforce: 'pre',
         exclude: /node_modules/,
-        loader: 'babel-loader'
+        use: [{
+          loader: 'babel-loader'
+        }]
       },
       {
         test: /\.(css|scss)$/,
-        loaders: [
+        use: [
           'style-loader',
           'css-loader',
           'sass-loader'
@@ -36,17 +42,10 @@ module.exports = {
   },
   plugins: [
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-    new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
+    new ESLintPlugin(),
     new HtmlWebpackPlugin({
       template: conf.path.src('index.html')
     }),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': '"production"'
-    }),
-    new UglifyESPlugin(),
-    new ExtractTextPlugin('index-[contenthash].css'),
-    new webpack.optimize.CommonsChunkPlugin({name: 'vendor'}),
     new webpack.LoaderOptionsPlugin({options: {postcss: [autoprefixer]}})
   ],
   devtool: 'cheap-source-map',

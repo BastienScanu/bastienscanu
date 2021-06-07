@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import MainSkill from './elements/mainSkill';
-import {translate} from 'react-i18next';
+import {withTranslation} from 'react-i18next';
 import SkillsRadar from './charts/skillsRadar';
 import DesignChart from './charts/designChart';
 import FrontChart from './charts/frontChart';
@@ -18,147 +18,147 @@ class MainSkills extends Component {
       design: {
         technos: [
           {
-            name: "toshop",
+            name: 'toshop',
             important: true
           },
           {
-            name: "sketch",
+            name: 'sketch',
             important: true
           },
           {
-            name: "trator",
+            name: 'trator',
             important: false
           }
         ],
-        icon: "paint-brush",
-        color: "#E62A10",
-        theme: "red"
+        icon: 'paint-brush',
+        color: '#E62A10',
+        theme: 'red'
       },
       front: {
         technos: [
           {
-            name: "html",
+            name: 'html',
             important: true
           },
           {
-            name: "css",
+            name: 'css',
             important: true
           },
           {
-            name: "es6",
+            name: 'es6',
             important: true
           },
           {
-            name: "angular",
+            name: 'angular',
             important: true
           },
           {
-            name: "react",
+            name: 'react',
             important: false
           },
           {
-            name: "sass",
+            name: 'sass',
             important: false
           },
           {
-            name: "jquery",
+            name: 'jquery',
             important: false
           }
         ],
-        icon: "desktop",
-        color: "#FF9800",
-        theme: "orange"
+        icon: 'desktop',
+        color: '#FF9800',
+        theme: 'orange'
       },
       back: {
         technos: [
           {
-            name: "algo",
+            name: 'algo',
             important: false,
             value: 70
           },
           {
-            name: "python",
+            name: 'python',
             important: false,
             value: 30
           },
           {
-            name: "es6",
+            name: 'es6',
             important: true,
             value: 80
           },
           {
-            name: "node",
+            name: 'node',
             important: true,
             value: 90
           },
           {
-            name: "php",
+            name: 'php',
             important: false,
             value: 60
           },
           {
-            name: "java",
+            name: 'java',
             important: true,
             value: 60
           },
           {
-            name: "c",
+            name: 'c',
             important: false,
             value: 50
           }
         ],
-        icon: "cogs",
-        color: "#2BAF2B",
-        theme: "green"
+        icon: 'cogs',
+        color: '#2BAF2B',
+        theme: 'green'
       },
       database: {
         technos: [
           {
-            name: "mongo",
+            name: 'mongo',
             important: true,
             value: 10
           },
           {
-            name: "sql",
+            name: 'sql',
             important: true,
             value: 10
           },
           {
-            name: "redis",
+            name: 'redis',
             important: false,
             value: 10
           }
         ],
-        icon: "database",
-        color: "#0277BD",
-        theme: "blue"
+        icon: 'database',
+        color: '#0277BD',
+        theme: 'blue'
       },
       os: {
         technos: [
           {
-            name: "mac",
+            name: 'mac',
             important: true
           },
           {
-            name: "linux",
+            name: 'linux',
             important: true
           },
           {
-            name: "win",
+            name: 'win',
             important: true
           },
           {
-            name: "shell",
+            name: 'shell',
             important: true
           },
           {
-            name: "docker",
+            name: 'docker',
             important: false
           }
         ],
-        icon: "terminal",
-        color: "#AB47BC",
-        theme: "purple"
+        icon: 'terminal',
+        color: '#AB47BC',
+        theme: 'purple'
       }
     };
   }
@@ -168,6 +168,7 @@ class MainSkills extends Component {
       if (state.openedMenu === index) {
         return {openedMenu: -1};
       }
+
       return {openedMenu: index};
     });
   }
@@ -185,7 +186,7 @@ class MainSkills extends Component {
 
   render() {
     const skills = [
-      "design", "front", "back", "database", "os"
+      'design', 'front', 'back', 'database', 'os'
     ];
     return (
       <div className="row">
@@ -197,13 +198,13 @@ class MainSkills extends Component {
             {skills.map((skill, index) => {
               return (
                 <MainSkill
+                  key={skill}
                   name={skill}
-                  key={index}
                   data={this.data[skill]}
                   handler={this.updateState}
                   index={index}
                   isOpened={this.state.openedMenu === index}
-                  />
+                />
               );
             })
             }
@@ -214,4 +215,4 @@ class MainSkills extends Component {
   }
 }
 
-export default translate(["common", "skills"], {wait: true})(MainSkills);
+export default withTranslation(['common', 'skills'])(MainSkills);

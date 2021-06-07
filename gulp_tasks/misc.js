@@ -2,7 +2,6 @@ const path = require('path');
 const gulp = require('gulp');
 const del = require('del');
 const filter = require('gulp-filter');
-const fs = require('fs');
 const conf = require('../conf/gulp.conf');
 
 gulp.task('clean', clean);

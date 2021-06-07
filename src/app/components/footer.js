@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {translate} from 'react-i18next';
+import {withTranslation} from 'react-i18next';
 import FontAwesome from 'react-fontawesome';
 import Luke from '../../images/icons/luke-saber.svg';
 import Vader from '../../images/icons/vader-saber.svg';
@@ -14,17 +14,17 @@ class MyFooter extends Component {
   }
 
   handleClick() {
-    this.setState({scroll: !this.state.scroll});
+    this.setState(prevState => ({scroll: !prevState.state.scroll}));
     setTimeout(
       () => {
-        this.setState({scroll: !this.state.scroll});
+        this.setState(prevState => ({scroll: !prevState.state.scroll}));
       },
       10
     );
   }
 
   dynamicClass() {
-    return this.state.scroll ? "scroll" : "noscroll";
+    return this.state.scroll ? 'scroll' : 'noscroll';
   }
 
   render() {
@@ -41,9 +41,9 @@ class MyFooter extends Component {
             </div>
             <div>
               <p className="icons">
-                <a href="https://fr.linkedin.com/in/bastienscanu" target="_blank" title={t('footer:linkedin')}><FontAwesome name="linkedin-square"/></a>
-                <a href="https://github.com/BastienScanu" target="_blank" title={t('footer:github')}><FontAwesome name="github"/></a>
-                <a href="https://twitter.com/BastienScanu" target="_blank" title={t('footer:github')}><FontAwesome name="twitter"/></a>
+                <a href="https://fr.linkedin.com/in/bastienscanu" target="_blank" title={t('footer:linkedin')} rel="noreferrer"><FontAwesome name="linkedin-square"/></a>
+                <a href="https://github.com/BastienScanu" target="_blank" title={t('footer:github')} rel="noreferrer"><FontAwesome name="github"/></a>
+                <a href="https://twitter.com/BastienScanu" target="_blank" title={t('footer:github')} rel="noreferrer"><FontAwesome name="twitter"/></a>
               </p>
             </div>
           </div>
@@ -75,8 +75,12 @@ class MyFooter extends Component {
   }
 }
 
+MyFooter.defaultProps = {
+  t: PropTypes.func
+};
+
 MyFooter.propTypes = {
   t: PropTypes.func
 };
 
-export default translate(["common", "footer"], {wait: true})(MyFooter);
+export default withTranslation(['common', 'footer'])(MyFooter);

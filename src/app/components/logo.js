@@ -11,6 +11,7 @@ export class Logo extends Component {
     if (this.props.white) {
       logo = logoWhite;
     }
+
     if (this.props.big) {
       if (this.props.white) {
         logo = logoBigWhite;
@@ -19,7 +20,7 @@ export class Logo extends Component {
       }
     }
 
-    const className = this.props.big ? (this.props.white ? "logoWhite" : "logoBlack") : "";
+    const className = this.props.big ? (this.props.white ? 'logoWhite' : 'logoBlack') : '';
 
     return (
       <a href="https://bastien-scanu.com" className={className}>
@@ -28,6 +29,12 @@ export class Logo extends Component {
     );
   }
 }
+
+Logo.defaultProps = {
+  size: PropTypes.number,
+  big: PropTypes.bool,
+  white: PropTypes.bool
+};
 
 Logo.propTypes = {
   size: PropTypes.number,

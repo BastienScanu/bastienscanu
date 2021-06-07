@@ -13,18 +13,17 @@ class Terminal extends Component {
   componentDidMount() {
     setInterval(() => {
       if (this.state.play && this.state.index < this.props.text.length) {
-        this.setState({
-          index: this.state.index + 1
-        });
+        this.setState(prevState => ({index: prevState.index + 1}));
       }
     }, 100);
   }
 
   componentWillUnmount() {
-    this.state = {
+    this.setState({
       play: false
-    };
+    });
   }
+
   render() {
     return (
       <div className={`terminal ${this.props.type}`}>
@@ -33,6 +32,12 @@ class Terminal extends Component {
     );
   }
 }
+
+Terminal.defaultProps = {
+  type: PropTypes.string,
+  prompt: PropTypes.string,
+  text: PropTypes.string
+};
 
 Terminal.propTypes = {
   type: PropTypes.string,

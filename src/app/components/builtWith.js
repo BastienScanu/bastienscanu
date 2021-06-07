@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import FontAwesome from 'react-fontawesome';
-import {translate} from 'react-i18next';
+import {withTranslation} from 'react-i18next';
 
 export class BuiltWith extends Component {
   render() {
@@ -21,7 +21,11 @@ export class BuiltWith extends Component {
             })}
           </div>
           <div className="row">
-            <button><a href="https://github.com/BastienScanu/bastienscanu" target="_blank"><FontAwesome name="github"/> {t('builtWith:github')}</a></button>
+            <button type="button">
+              <a href="https://github.com/BastienScanu/bastienscanu" target="_blank" rel="noreferrer">
+                <FontAwesome name="github"/> {t('builtWith:github')}
+              </a>
+            </button>
           </div>
         </div>
       </section>
@@ -29,8 +33,12 @@ export class BuiltWith extends Component {
   }
 }
 
+BuiltWith.defaultProps = {
+  t: PropTypes.func
+};
+
 BuiltWith.propTypes = {
   t: PropTypes.func
 };
 
-export default translate(["common", "builtWith"], {wait: true})(BuiltWith);
+export default withTranslation(['common', 'builtWith'])(BuiltWith);

@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import {translate} from 'react-i18next';
+import {withTranslation} from 'react-i18next';
 
 class FrontChart extends Component {
   constructor(props) {
@@ -18,16 +17,14 @@ class FrontChart extends Component {
   }
 
   componentWillUnmount() {
-    this.state = {
+    this.setState({
       play: false
-    };
+    });
   }
 
   nextStyle() {
     if (this.state.play) {
-      this.setState({
-        style: (this.state.style + 1) % 20
-      });
+      this.setState(prevState => ({style: (prevState.state.style + 1) % 20}));
       setTimeout(() => {
         this.nextStyle();
       }, this.intervals[this.state.style]);
@@ -43,8 +40,4 @@ class FrontChart extends Component {
   }
 }
 
-FrontChart.propTypes = {
-  t: PropTypes.func
-};
-
-export default translate(["common", "skills"], {wait: true})(FrontChart);
+export default withTranslation(['common', 'skills'])(FrontChart);

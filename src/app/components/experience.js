@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {translate} from 'react-i18next';
+import {withTranslation} from 'react-i18next';
 import TimeLine from './timeline';
 
 class Experience extends Component {
-
   render() {
     const {t} = this.props;
     return (
@@ -14,40 +13,44 @@ class Experience extends Component {
           <TimeLine
             cards={[
               {
-                name: "umi",
-                type: "job"
+                name: 'umi',
+                type: 'job'
               }, {
-                name: "umi2",
-                type: "job"
+                name: 'umi2',
+                type: 'job'
               }, {
-                name: "upc",
-                type: "school"
+                name: 'upc',
+                type: 'school'
               }, {
-                name: "mozilla",
-                type: "job"
+                name: 'mozilla',
+                type: 'job'
               }, {
-                name: "imag",
-                type: "school"
+                name: 'imag',
+                type: 'school'
               }, {
-                name: "stm",
-                type: "job"
+                name: 'stm',
+                type: 'job'
               }, {
-                name: "phelma",
-                type: "school"
+                name: 'phelma',
+                type: 'school'
               }, {
-                name: "prepa",
-                type: "school"
+                name: 'prepa',
+                type: 'school'
               }
             ]}
-            />
+          />
         </div>
       </section>
     );
   }
 }
 
+Experience.defaultProps = {
+  t: PropTypes.func
+};
+
 Experience.propTypes = {
   t: PropTypes.func
 };
 
-export default translate(["common", "experience"], {wait: true})(Experience);
+export default withTranslation(['common', 'experience'])(Experience);

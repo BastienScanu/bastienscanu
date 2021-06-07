@@ -8,14 +8,20 @@ class CircularProgressBar extends Component {
     const className = () => this.props.class;
     return (
       <CircularProgressbar
-        percentage={this.props.percentage}
-        initialAnimation strokeWidth={7}
+        initialAnimation
+        percentage={this.props.percentage} strokeWidth={7}
         textForPercentage={text}
         classForPercentage={className}
-        />
+      />
     );
   }
 }
+
+CircularProgressBar.defaultProps = {
+  text: PropTypes.string,
+  class: PropTypes.string,
+  percentage: PropTypes.number
+};
 
 CircularProgressBar.propTypes = {
   text: PropTypes.string,

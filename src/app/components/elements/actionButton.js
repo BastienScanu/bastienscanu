@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {translate} from 'react-i18next';
+import {withTranslation} from 'react-i18next';
 import FontAwesome from 'react-fontawesome';
 import {spring, Motion} from 'react-motion';
 
@@ -15,7 +15,7 @@ class ActionButton extends Component {
 
   initialPosition(childIndex) {
     return {
-      bottom: spring(-51 - 46 * childIndex)
+      bottom: spring(-51 - (46 * childIndex))
     };
   }
 
@@ -40,40 +40,40 @@ class ActionButton extends Component {
     return (
       <div id="actionButton" onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut}>
         <Motion style={isOpen ? finalPosition : this.initialPosition(2)}>
-          {({bottom}) =>
+          {({bottom}) => (
             <div className="buttonLabel" style={{bottom}}>
               <label className="tooltip">{t('common:button.linkedin')}</label>
               <div className="smallButton blue">
-                <a href="https://fr.linkedin.com/in/bastienscanu" target="_blank">
+                <a href="https://fr.linkedin.com/in/bastienscanu" target="_blank" rel="noreferrer">
                   <FontAwesome name="linkedin-square"/>
                 </a>
               </div>
             </div>
-          }
+          )}
         </Motion>
         <Motion style={isOpen ? finalPosition : this.initialPosition(1)}>
-          {({bottom}) =>
+          {({bottom}) => (
             <div className="buttonLabel" style={{bottom}}>
               <label className="tooltip">{t('common:button.mail')}</label>
               <div className="smallButton orange">
-                <a href="mailto:bastien-scanu@gmail.com" target="_blank">
+                <a href="mailto:bastien-scanu@gmail.com" target="_blank" rel="noreferrer">
                   <i className="material-icons">mail</i>
                 </a>
               </div>
             </div>
-          }
+          )}
         </Motion>
         <Motion style={isOpen ? finalPosition : this.initialPosition(0)}>
-          {({bottom}) =>
+          {({bottom}) => (
             <div className="buttonLabel" style={{bottom}}>
               <label className="tooltip">{t('common:button.resume')}</label>
               <div className="smallButton red">
-                <a href="https://bastien-scanu.com/bastien-scanu-cv.pdf" target="_blank">
+                <a href="https://bastien-scanu.com/bastien-scanu-cv.pdf" target="_blank" rel="noreferrer">
                   <i className="material-icons">description</i>
                 </a>
               </div>
             </div>
-          }
+          )}
         </Motion>
         <div className="mainButton">
           <div className="bigButton green">
@@ -85,8 +85,12 @@ class ActionButton extends Component {
   }
 }
 
+ActionButton.defaultProps = {
+  t: PropTypes.func
+};
+
 ActionButton.propTypes = {
   t: PropTypes.func
 };
 
-export default translate(["common"], {wait: true})(ActionButton);
+export default withTranslation(['common'])(ActionButton);

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {translate} from 'react-i18next';
+import {withTranslation} from 'react-i18next';
 import {Collapse} from 'react-collapse';
 
 class JobCard extends Component {
@@ -19,15 +19,15 @@ class JobCard extends Component {
 
   subTitles() {
     const {t} = this.props;
-    return t(`experience:${this.props.name}.type`) === "work" ?
-    {
-      type: t('experience:company'),
-      mission: t('experience:mission')
-    } :
-    {
-      type: t('experience:school'),
-      mission: t('experience:course')
-    };
+    return t(`experience:${this.props.name}.type`) === 'work' ?
+      {
+        type: t('experience:company'),
+        mission: t('experience:mission')
+      } :
+      {
+        type: t('experience:school'),
+        mission: t('experience:course')
+      };
   }
 
   render() {
@@ -53,19 +53,19 @@ class JobCard extends Component {
             <hr className="jobCardDivider" style={{marginTop: 15, marginBottom: 5}}/>
             <div className="row cardLinks">
               <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                <a href={t(`experience:${this.props.name}.maps`)} target="_blank">
+                <a href={t(`experience:${this.props.name}.maps`)} target="_blank" rel="noreferrer">
                   <i className="material-icons">room</i> {t(`experience:${this.props.name}.location`)}
                 </a>
               </div>
               <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                <a href={t(`experience:${this.props.name}.website`)} target="_blank">
-                  <i className="material-icons">language</i> {t(`experience:website`)}
+                <a href={t(`experience:${this.props.name}.website`)} target="_blank" rel="noreferrer">
+                  <i className="material-icons">language</i> {t('experience:website')}
                 </a>
               </div>
             </div>
           </Collapse>
           <div className="seeMore" onClick={this.handleCLickMore}>
-            <i className="material-icons">{this.state.seeDetails ? "keyboard_arrow_up" : "keyboard_arrow_down"}</i>
+            <i className="material-icons">{this.state.seeDetails ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}</i>
           </div>
         </div>
         <div className="cardMedia">
@@ -79,10 +79,14 @@ class JobCard extends Component {
   }
 }
 
-JobCard.propTypes = {
+JobCard.defaultProps = {
   t: PropTypes.func,
-  type: PropTypes.string,
   name: PropTypes.string
 };
 
-export default translate(["common", "experience"], {wait: true})(JobCard);
+JobCard.propTypes = {
+  t: PropTypes.func,
+  name: PropTypes.string
+};
+
+export default withTranslation(['common', 'experience'])(JobCard);

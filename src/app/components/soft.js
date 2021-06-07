@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {translate} from 'react-i18next';
+import {withTranslation} from 'react-i18next';
 import {TagCloud} from 'react-tagcloud';
 
 class Soft extends Component {
@@ -8,57 +8,63 @@ class Soft extends Component {
     const {t} = this.props;
     const tags = [
       {
-        value: "team",
+        value: 'team',
         count: 3
       },
       {
-        value: "project",
+        value: 'project',
         count: 1
       },
       {
-        value: "agility",
+        value: 'agility',
         count: 4
       },
       {
-        value: "communication",
+        value: 'communication',
         count: 2
       },
       {
-        value: "creativity",
+        value: 'creativity',
         count: 2
       },
       {
-        value: "autonomy",
+        value: 'autonomy',
         count: 3
       },
       {
-        value: "curiosity",
+        value: 'curiosity',
         count: 1
       }
     ];
     const customRenderer = tag => {
       return (
         <span
+          key={tag.value}
           style={{
             animation: 'blinker 3s linear infinite',
             animationDelay: `${Math.random() * 2}s`
           }}
-          key={tag.value}
           className={`tag-${tag.count}`}
-          > {t(`skills:soft.skills.${tag.value}`)}</span>);
+        > {t(`skills:soft.skills.${tag.value}`)}
+        </span>
+      );
     };
 
     return (
       <div id="soft">
         <h4>{t('skills:soft.title')}</h4>
-        <TagCloud tags={tags} minSize={20} maxSize={38} renderer={customRenderer} disableRandomColor shuffle={false}/>
+        <TagCloud disableRandomColor tags={tags} minSize={20} maxSize={38} renderer={customRenderer} shuffle={false}/>
       </div>
     );
   }
 }
 
+Soft.defaultProps = {
+  t: PropTypes.func
+};
+
 Soft.propTypes = {
   t: PropTypes.func
 };
 
-export default translate(["common", "skills"], {wait: true})(Soft);
+export default withTranslation(['common', 'skills'])(Soft);
